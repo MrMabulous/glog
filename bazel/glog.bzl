@@ -59,7 +59,7 @@ def glog_library(namespace = "google", with_gflags = 1, **kwargs):
 
     wasm_copts = [
         # Disable warnings that exists in glog.
-        "-Wno-sign-compare",
+        #"-Wno-sign-compare",
         "-Wno-unused-function",
         "-Wno-unused-local-typedefs",
         "-Wno-unused-variable",
@@ -153,11 +153,7 @@ def glog_library(namespace = "google", with_gflags = 1, **kwargs):
         }),
         copts =
             select({
-                "@bazel_tools//src/conditions:windows": common_copts + windows_only_copts,
-                "@bazel_tools//src/conditions:darwin": common_copts + linux_or_darwin_copts + darwin_only_copts,
-                "@bazel_tools//src/conditions:freebsd": common_copts + linux_or_darwin_copts + freebsd_only_copts,
-                ":wasm": common_copts + wasm_copts,
-                "//conditions:default": common_copts + linux_or_darwin_copts,
+                "//conditions:default": common_copts + windows_only_copts,
             }),
         deps = gflags_deps + select({
             "@bazel_tools//src/conditions:windows": [":strip_include_prefix_hack"],
